@@ -36,6 +36,17 @@ input:focus{outline:2px solid var(--ac);outline-offset:0}
 .res .m{font-size:15px;color:var(--acdk);margin:2px 0 0}
 .res .e{font-size:14px;color:var(--acdk);margin:8px 0 0}
 .res .hint{font-size:14px;color:var(--tx2);margin:0}
+.res.ok{cursor:pointer}
+.res .tap{font-size:11px;color:var(--acdk);opacity:.65;margin:10px 0 0}
+.ov{display:none;position:fixed;inset:0;z-index:50;background:var(--acbg);flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;cursor:pointer}
+.ov.on{display:flex}
+.ov .s{font-size:24px;color:var(--acdk);margin:0}
+.ov .n{font-size:160px;font-weight:500;color:var(--acdk);line-height:1.1;margin:0}
+.ov .m{font-size:36px;color:var(--acdk);margin:0}
+.ov .e{font-size:28px;color:var(--acdk);margin:20px 0 0}
+.ov .cl{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));left:14px;width:46px;height:46px;margin:0;padding:0;border:none;font-size:26px;color:var(--acdk)}
+.ov .hn{position:absolute;bottom:calc(22px + env(safe-area-inset-bottom,0px));font-size:13px;color:var(--acdk);opacity:.65;margin:0}
+.half{font-size:15px;font-weight:300;color:var(--tx2);text-align:center;margin:12px 0 0;min-height:20px}
 .tot{font-size:12px;color:var(--tx3);text-align:center;margin:10px 0 0;min-height:16px}
 button{width:100%;height:46px;margin-top:12px;font-size:15px;font-family:inherit;border:1px solid var(--bd);border-radius:10px;background:transparent;color:var(--tx);cursor:pointer}
 button:active{transform:scale(.98)}
@@ -59,11 +70,13 @@ button:active{transform:scale(.98)}
 <div><p class="lb">شرايط العلبة</p><input id="y" type="text" inputmode="numeric" placeholder="2"></div>
 </div>
 <div class="res" id="res"><p class="hint">أدخل البيانات</p></div>
+<p class="half" id="half"></p>
 <p class="tot" id="tot"></p>
 <button id="rf" type="button">مسح الكل</button>
 </div>
 <p class="ft">تصميم وتنفيذ : (علاء راضي - Alaa Rady)</p>
 </div>
+<div class="ov" id="ov"><button class="cl" id="cl" type="button" aria-label="إغلاق">✕</button><div id="ovc"></div><p class="hn">اضغط في أي مكان للرجوع</p></div>
 <script>
 var ids=['a','b','c','x','y'];
 function num(id){
@@ -73,13 +86,30 @@ function num(id){
   return isNaN(n)?0:n;
 }
 function fmt(n){return String(Math.round(n*100)/100)}
+var cur='';
+function openOv(){
+  if(!cur)return;
+  if(document.activeElement&&document.activeElement.blur)document.activeElement.blur();
+  document.getElementById('ov').className='ov on';
+  try{location.hash='r'}catch(e){}
+}
+function closeOv(){
+  var o=document.getElementById('ov');
+  if(o.className.indexOf('on')<0)return;
+  o.className='ov';
+  try{if(location.hash==='#r')history.back()}catch(e){}
+}
 function calc(){
   var a=num('a'),b=num('b'),c=num('c'),x=num('x'),y=num('y');
   var res=document.getElementById('res'),tot=document.getElementById('tot');
   var total=a*b*c;
-  if(total<=0||x<=0||y<=0){res.innerHTML='<p class="hint">أدخل البيانات</p>';tot.textContent='';return}
+  if(total<=0||x<=0||y<=0){cur='';document.getElementById('half').textContent='';res.className='res';res.innerHTML='<p class="hint">أدخل البيانات</p>';tot.textContent='';closeOv();return}
   var sp=x/y;
-  var strips=Math.ceil(total/sp-1e-9);
+  var q=Math.floor(total/sp+1e-9),left=total-q*sp;
+  if(left<0)left=0;
+  var up=left>=5-1e-9;
+  var strips=q+(up?1:0);
+  if(strips<1)strips=1;
   var boxes=Math.floor(strips/y),rest=strips-boxes*y;
   var parts=[];
   if(boxes>0)parts.push(boxes===1?'علبة':(boxes===2?'علبتين':boxes+' علب'));
@@ -87,10 +117,19 @@ function calc(){
   var full=Math.ceil(strips/y-1e-9);
   var html='<p class="s">اصرف</p><p class="n">'+strips+'</p><p class="m">'+(strips===1?'شريط':'شرايط')+'</p>';
   if(strips>=y)html+='<p class="e">'+parts.join(' + ')+'</p>';
-  res.innerHTML=html;
-  tot.textContent='إجمالي الأقراص: '+fmt(total)+'  |  الشريط: '+fmt(sp)+' قرص';
+  cur=html;
+  var h=strips/2;
+  document.getElementById('half').textContent='نص الكمية: '+fmt(h)+' '+(h<=1?'شريط':(h===2?'شريطين':'شرايط'));
+  res.className='res ok';
+  res.innerHTML=html+'<p class="tap">اضغط للتكبير</p>';
+  document.getElementById('ovc').innerHTML=html;
+  var note=(!up&&left>0.001)?'  |  اتشال '+fmt(left)+' قرص':'';
+  tot.textContent='إجمالي الأقراص: '+fmt(total)+'  |  الشريط: '+fmt(sp)+' قرص'+note;
 }
 ids.forEach(function(i){document.getElementById(i).addEventListener('input',calc)});
+document.getElementById('res').addEventListener('click',openOv);
+document.getElementById('ov').addEventListener('click',closeOv);
+window.addEventListener('hashchange',function(){if(location.hash!=='#r')document.getElementById('ov').className='ov'});
 document.getElementById('rf').addEventListener('click',function(){
   ids.forEach(function(i){document.getElementById(i).value=''});
   calc();
@@ -102,7 +141,7 @@ fa();
 window.addEventListener('load',fa);
 window.addEventListener('pageshow',fa);
 document.addEventListener('visibilitychange',function(){if(!document.hidden)fa()});
-document.addEventListener('click',function(e){if(!/INPUT|BUTTON/.test(e.target.tagName))fa()});
+document.addEventListener('click',function(e){if(!/INPUT|BUTTON/.test(e.target.tagName)&&!e.target.closest('.res,.ov'))fa()});
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
 </body>
