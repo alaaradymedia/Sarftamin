@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f6e56">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="صرف التأمين">
+<title>حاسبة صرف التأمين الصحي</title>
+<style>
+:root{--bg:#f6f5f1;--card:#fff;--tx:#1d1d1b;--tx2:#5f5e5a;--tx3:#8a8983;--bd:#dcdad2;--ac:#0f6e56;--acbg:#e1f5ee;--acdk:#085041;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1c1a;--card:#262624;--tx:#f1efe8;--tx2:#b4b2a9;--tx3:#888780;--bd:#3d3d3a;--ac:#5dcaa5;--acbg:#04342c;--acdk:#9fe1cb}}
+:root[data-theme="dark"]{--bg:#1c1c1a;--card:#262624;--tx:#f1efe8;--tx2:#b4b2a9;--tx3:#888780;--bd:#3d3d3a;--ac:#5dcaa5;--acbg:#04342c;--acdk:#9fe1cb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;padding:16px;display:flex;justify-content:center}
+.w{width:100%;max-width:420px}
+h1{font-size:19px;font-weight:500;text-align:center;margin:8px 0 16px;line-height:1.5}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px}
+.lb{font-size:13px;color:var(--tx2);margin:0 0 6px}
+.row{display:flex;direction:ltr;align-items:flex-end;gap:6px;margin-bottom:16px}
+.f{flex:1;text-align:center}
+.f small{display:block;font-size:12px;color:var(--tx3);margin-top:4px}
+.x{padding-bottom:24px;color:var(--tx3)}
+input{width:100%;height:50px;font-size:22px;text-align:center;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-family:inherit}
+input:focus{outline:2px solid var(--ac);outline-offset:0}
+.two{display:flex;direction:ltr;gap:10px;margin-bottom:16px}
+.two .lb{text-align:center}
+.two>div{flex:1}
+.res{background:var(--acbg);border-radius:12px;padding:16px;text-align:center;min-height:130px;display:flex;flex-direction:column;justify-content:center}
+.res .s{font-size:13px;color:var(--acdk);margin:0}
+.res .n{font-size:44px;font-weight:500;color:var(--acdk);line-height:1.2;margin:0}
+.res .m{font-size:15px;color:var(--acdk);margin:2px 0 0}
+.res .e{font-size:14px;color:var(--acdk);margin:8px 0 0}
+.res .hint{font-size:14px;color:var(--tx2);margin:0}
+.tot{font-size:12px;color:var(--tx3);text-align:center;margin:10px 0 0;min-height:16px}
+button{width:100%;height:46px;margin-top:12px;font-size:15px;font-family:inherit;border:1px solid var(--bd);border-radius:10px;background:transparent;color:var(--tx);cursor:pointer}
+button:active{transform:scale(.98)}
+.ft{text-align:center;font-size:11px;color:var(--tx3);opacity:.7;margin:18px 0 6px;font-weight:300}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>حاسبة صرف التأمين الصحي<br>(علاء راضي)</h1>
+<div class="card">
+<p class="lb">الجرعة</p>
+<div class="row">
+<div class="f"><input id="a" type="text" inputmode="decimal" placeholder="1"><small>قرص</small></div>
+<span class="x">×</span>
+<div class="f"><input id="b" type="text" inputmode="decimal" placeholder="1"><small>مرة يوميًا</small></div>
+<span class="x">×</span>
+<div class="f"><input id="c" type="text" inputmode="decimal" placeholder="30"><small>يوم</small></div>
+</div>
+<div class="two">
+<div><p class="lb">أقراص العلبة</p><input id="x" type="text" inputmode="numeric" placeholder="24"></div>
+<div><p class="lb">شرايط العلبة</p><input id="y" type="text" inputmode="numeric" placeholder="2"></div>
+</div>
+<div class="res" id="res"><p class="hint">أدخل البيانات</p></div>
+<p class="tot" id="tot"></p>
+<button id="rf" type="button">مسح الكل</button>
+</div>
+<p class="ft">تصميم وتنفيذ : (علاء راضي - Alaa Rady)</p>
+</div>
+<script>
+var ids=['a','b','c','x','y'];
+function num(id){
+  var v=document.getElementById(id).value;
+  v=v.replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)}).replace(/[٫,،]/g,'.').replace(/\s/g,'');
+  var n=parseFloat(v);
+  return isNaN(n)?0:n;
+}
+function fmt(n){return String(Math.round(n*100)/100)}
+function calc(){
+  var a=num('a'),b=num('b'),c=num('c'),x=num('x'),y=num('y');
+  var res=document.getElementById('res'),tot=document.getElementById('tot');
+  var total=a*b*c;
+  if(total<=0||x<=0||y<=0){res.innerHTML='<p class="hint">أدخل البيانات</p>';tot.textContent='';return}
+  var sp=x/y;
+  var strips=Math.ceil(total/sp-1e-9);
+  var boxes=Math.floor(strips/y),rest=strips-boxes*y;
+  var parts=[];
+  if(boxes>0)parts.push(boxes===1?'علبة':(boxes===2?'علبتين':boxes+' علب'));
+  if(rest>0)parts.push(rest===1?'شريط':(rest===2?'شريطين':rest+' شرايط'));
+  var full=Math.ceil(strips/y-1e-9);
+  var html='<p class="s">اصرف</p><p class="n">'+strips+'</p><p class="m">'+(strips===1?'شريط':'شرايط')+'</p>';
+  if(strips>=y)html+='<p class="e">'+parts.join(' + ')+'</p>';
+  if(rest>0&&boxes>0)html+='<p class="e">أو علب كاملة: '+(full===1?'علبة':(full===2?'علبتين':full+' علب'))+'</p>';
+  res.innerHTML=html;
+  tot.textContent='إجمالي الأقراص: '+fmt(total)+'  |  الشريط: '+fmt(sp)+' قرص';
+}
+ids.forEach(function(i){document.getElementById(i).addEventListener('input',calc)});
+document.getElementById('rf').addEventListener('click',function(){
+  ids.forEach(function(i){document.getElementById(i).value=''});
+  calc();
+  document.getElementById('a').focus();
+});
+calc();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+</script>
+</body>
+</html>
