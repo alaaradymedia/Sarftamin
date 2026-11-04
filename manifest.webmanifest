@@ -1,7 +1,7 @@
 {
-  "name": "حاسبة صرف التأمين الصحي",
-  "short_name": "صرف التأمين",
-  "description": "حاسبة صرف التأمين الصحي - علاء راضي",
+  "name": "Sarftamin",
+  "short_name": "Sarftamin",
+  "description": "حاسبة صرف علاج التأمين الصحي - علاء راضي",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./index.html",

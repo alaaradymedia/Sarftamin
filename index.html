@@ -9,8 +9,8 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="صرف التأمين">
-<title>حاسبة صرف التأمين الصحي</title>
+<meta name="apple-mobile-web-app-title" content="Sarftamin">
+<title>Sarftamin</title>
 <style>
 :root{--bg:#f6f5f1;--card:#fff;--tx:#1d1d1b;--tx2:#5f5e5a;--tx3:#8a8983;--bd:#dcdad2;--ac:#0f6e56;--acbg:#e1f5ee;--acdk:#085041;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1c1a;--card:#262624;--tx:#f1efe8;--tx2:#b4b2a9;--tx3:#888780;--bd:#3d3d3a;--ac:#5dcaa5;--acbg:#04342c;--acdk:#9fe1cb}}
@@ -44,11 +44,11 @@ button:active{transform:scale(.98)}
 </head>
 <body>
 <div class="w">
-<h1>حاسبة صرف التأمين الصحي<br>(علاء راضي)</h1>
+<h1>حاسبة صرف علاج التأمين الصحي<br>(علاء راضي)</h1>
 <div class="card">
 <p class="lb">الجرعة</p>
 <div class="row">
-<div class="f"><input id="a" type="text" inputmode="decimal" placeholder="1"><small>قرص</small></div>
+<div class="f"><input id="a" type="text" inputmode="decimal" placeholder="1" autofocus><small>قرص</small></div>
 <span class="x">×</span>
 <div class="f"><input id="b" type="text" inputmode="decimal" placeholder="1"><small>مرة يوميًا</small></div>
 <span class="x">×</span>
@@ -87,7 +87,6 @@ function calc(){
   var full=Math.ceil(strips/y-1e-9);
   var html='<p class="s">اصرف</p><p class="n">'+strips+'</p><p class="m">'+(strips===1?'شريط':'شرايط')+'</p>';
   if(strips>=y)html+='<p class="e">'+parts.join(' + ')+'</p>';
-  if(rest>0&&boxes>0)html+='<p class="e">أو علب كاملة: '+(full===1?'علبة':(full===2?'علبتين':full+' علب'))+'</p>';
   res.innerHTML=html;
   tot.textContent='إجمالي الأقراص: '+fmt(total)+'  |  الشريط: '+fmt(sp)+' قرص';
 }
@@ -98,6 +97,12 @@ document.getElementById('rf').addEventListener('click',function(){
   document.getElementById('a').focus();
 });
 calc();
+function fa(){var e=document.getElementById('a');e.focus();}
+fa();
+window.addEventListener('load',fa);
+window.addEventListener('pageshow',fa);
+document.addEventListener('visibilitychange',function(){if(!document.hidden)fa()});
+document.addEventListener('click',function(e){if(!/INPUT|BUTTON/.test(e.target.tagName))fa()});
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
 </body>
