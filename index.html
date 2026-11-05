@@ -29,8 +29,13 @@
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,-apple-system,sans-serif;line-height:1.55;padding-bottom:env(safe-area-inset-bottom,0px)}
-.hd{background:var(--hd);color:#fff;padding:calc(16px + env(safe-area-inset-top,0px)) 16px 56px}
-.hd-in{max-width:480px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.hd{position:relative;background:var(--hd);color:#fff;padding:calc(16px + env(safe-area-inset-top,0px)) 16px 56px}
+.hd-in{position:relative;z-index:4;max-width:480px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.hd-art{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.hd-deco{position:absolute;inset:0;width:100%;height:100%}
+.hd-wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:30px;display:block}
+.hd-wave .w1{fill:rgba(255,255,255,.14)}
+.hd-wave .w2{fill:var(--bg)}
 .logo{width:48px;height:48px;border-radius:14px;flex:none;box-shadow:0 0 0 1.5px rgba(255,255,255,.28)}
 .ttl{flex:1;min-width:0}
 .hd h1{font-size:18px;font-weight:700;margin:0;line-height:1.4}
@@ -61,7 +66,7 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var
 .tb .ico-sun{display:none}
 :root[data-theme="dark"] .tb .ico-sun{display:block}
 :root[data-theme="dark"] .tb .ico-moon{display:none}
-.app{width:100%;flex:1;display:flex;flex-direction:column;max-width:480px;margin:-38px auto 0;padding:0 14px 8px}
+.app{position:relative;z-index:2;width:100%;flex:1;display:flex;flex-direction:column;max-width:480px;margin:-38px auto 0;padding:0 14px 8px}
 .grid{display:grid;gap:14px;margin-bottom:22px}
 .card{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:18px}
 .sec{font-size:14px;font-weight:700;margin:0 0 12px}
@@ -118,13 +123,14 @@ input:focus{outline:none;border-color:var(--jd);box-shadow:0 0 0 4px var(--ring)
 @media (min-width:880px){
   body{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27180%27%20height%3D%27180%27%20viewBox%3D%270%200%20180%20180%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%23DAE7E2%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%3E%3Cg%20transform%3D%27rotate%28-40%2045%2045%29%27%3E%3Crect%20x%3D%2725%27%20y%3D%2736%27%20width%3D%2740%27%20height%3D%2718%27%20rx%3D%279%27/%3E%3Cpath%20d%3D%27M45%2036v18%27/%3E%3C/g%3E%3Cg%20transform%3D%27rotate%2835%20135%20125%29%27%3E%3Crect%20x%3D%27115%27%20y%3D%27116%27%20width%3D%2740%27%20height%3D%2718%27%20rx%3D%279%27/%3E%3Cpath%20d%3D%27M135%20116v18%27/%3E%3C/g%3E%3C/g%3E%3Cg%20fill%3D%27%23DAE7E2%27%3E%3Ccircle%20cx%3D%27140%27%20cy%3D%2736%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%27152%27%20cy%3D%2736%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%27164%27%20cy%3D%2736%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%2720%27%20cy%3D%27142%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%27142%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%2744%27%20cy%3D%27142%27%20r%3D%272.2%27/%3E%3C/g%3E%3C/svg%3E")}
   :root[data-theme="dark"] body{background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27180%27%20height%3D%27180%27%20viewBox%3D%270%200%20180%20180%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27%231B2E28%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%3E%3Cg%20transform%3D%27rotate%28-40%2045%2045%29%27%3E%3Crect%20x%3D%2725%27%20y%3D%2736%27%20width%3D%2740%27%20height%3D%2718%27%20rx%3D%279%27/%3E%3Cpath%20d%3D%27M45%2036v18%27/%3E%3C/g%3E%3Cg%20transform%3D%27rotate%2835%20135%20125%29%27%3E%3Crect%20x%3D%27115%27%20y%3D%27116%27%20width%3D%2740%27%20height%3D%2718%27%20rx%3D%279%27/%3E%3Cpath%20d%3D%27M135%20116v18%27/%3E%3C/g%3E%3C/g%3E%3Cg%20fill%3D%27%231B2E28%27%3E%3Ccircle%20cx%3D%27140%27%20cy%3D%2736%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%27152%27%20cy%3D%2736%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%27164%27%20cy%3D%2736%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%2720%27%20cy%3D%27142%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%27142%27%20r%3D%272.2%27/%3E%3Ccircle%20cx%3D%2744%27%20cy%3D%27142%27%20r%3D%272.2%27/%3E%3C/g%3E%3C/svg%3E")}
-  .hd{padding:calc(26px + env(safe-area-inset-top,0px)) 28px 30px}
+  .hd{padding:calc(34px + env(safe-area-inset-top,0px)) 28px clamp(70px,7vw,100px)}
+  .hd-wave{height:clamp(54px,6vw,90px)}
   .hd-in{max-width:1000px;gap:16px}
-  .hd h1{font-size:25px}
+  .hd h1{font-size:28px}
   .hd p{font-size:15px}
-  .logo{width:56px;height:56px;border-radius:16px}
+  .logo{width:62px;height:62px;border-radius:18px}
   .tb{width:44px;height:44px}
-  .app{max-width:1056px;margin-top:26px;padding:0 28px 8px}
+  .app{max-width:1056px;margin-top:4px;padding:0 28px 8px}
   .grid{grid-template-columns:1.05fr 1fr;gap:24px;align-items:stretch;min-height:clamp(440px,54vh,660px)}
   .card{padding:28px;display:flex;flex-direction:column;justify-content:center}
   input{height:clamp(58px,7vh,78px);font-size:clamp(26px,3.3vh,34px)}
@@ -152,7 +158,18 @@ input:focus{outline:none;border-color:var(--jd);box-shadow:0 0 0 4px var(--ring)
 </style>
 </head>
 <body>
-<header class="hd"><div class="hd-in">
+<header class="hd">
+<div class="hd-art" aria-hidden="true">
+<svg class="hd-deco" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+<g opacity=".13"><g transform="rotate(-32 130 100)"><rect x="80" y="82" width="100" height="38" rx="19"/><path d="M130 82v38"/></g>
+<g transform="rotate(24 470 150)"><rect x="430" y="136" width="80" height="30" rx="15"/><path d="M470 136v30"/></g>
+<circle cx="880" cy="60" r="34"/><circle cx="880" cy="60" r="18"/></g>
+<g fill="#fff" stroke="none" opacity=".12"><circle cx="300" cy="50" r="6"/><circle cx="324" cy="50" r="6"/><circle cx="348" cy="50" r="6"/><circle cx="372" cy="50" r="6"/><circle cx="300" cy="74" r="6"/><circle cx="324" cy="74" r="6"/><circle cx="348" cy="74" r="6"/><circle cx="372" cy="74" r="6"/>
+<circle cx="700" cy="120" r="5"/><circle cx="720" cy="120" r="5"/><circle cx="740" cy="120" r="5"/><circle cx="960" cy="150" r="4"/><circle cx="60" cy="40" r="4"/></g>
+</svg>
+<svg class="hd-wave" viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="w1" d="M0 52C200 8 380 8 560 50S920 92 1100 50 1360 14 1440 40V120H0Z"/><path class="w2" d="M0 74C180 112 360 112 540 74S900 34 1080 74 1350 104 1440 82V120H0Z"/></svg>
+</div>
+<div class="hd-in">
 <button class="logo-btn" id="lgo" type="button" aria-label="Refresh / تحديث"><img class="logo" src="data:image/png;base64,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" alt="" width="48" height="48"></button>
 <div class="ttl"><h1 data-t="title"></h1><p data-t="sub"></p></div>
 <div class="tools">
