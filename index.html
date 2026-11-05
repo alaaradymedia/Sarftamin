@@ -170,9 +170,9 @@ input:focus{outline:none;border-color:var(--jd);box-shadow:0 0 0 4px var(--ring)
 <p class="pt" data-t="kbTitle"></p>
 <div class="kr"><div class="kk"><button class="key" type="button" data-act="next">+</button></div><span class="kd" data-t="k_next"></span></div>
 <div class="kr"><div class="kk"><button class="key" type="button" data-act="prev">&minus;</button></div><span class="kd" data-t="k_prev"></span></div>
+<div class="kr"><div class="kk"><button class="key" type="button" data-act="clear">End</button></div><span class="kd" data-t="k_clear"></span></div>
 <div class="kr"><div class="kk"><button class="key" type="button" data-act="enter">Enter</button></div><span class="kd" data-t="k_enter"></span></div>
 <div class="kr"><div class="kk"><button class="key" type="button" data-act="esc">Esc</button></div><span class="kd" data-t="k_esc"></span></div>
-<div class="kr"><div class="kk"><button class="key" type="button" data-act="clear">End</button></div><span class="kd" data-t="k_clear"></span></div>
 </div></div>
 </div>
 </div>
@@ -289,9 +289,9 @@ function calc(){
   res.className='res ok';
   res.innerHTML=EXP+content;
   $('ovc').innerHTML=content;
-  var dropped=(!up&&left>0.001);
-  if(en)tot.textContent='Tablets: '+fmt(total)+'  |  Strip: '+fmt(sp)+' tablets'+(dropped?'  |  Dropped: '+fmt(left):'');
-  else tot.textContent='الأقراص: '+fmt(total)+'  |  الشريط: '+fmt(sp)+' قرص'+(dropped?'  |  اتشال '+fmt(left)+' قرص':'');
+  var out=strips*sp;
+  if(en)tot.textContent='Required: '+fmt(total)+' tablets  |  Dispensed: '+fmt(out)+' tablets  |  Strip: '+fmt(sp)+' tablets';
+  else tot.textContent='المطلوب: '+fmt(total)+' قرص  |  المصروف: '+fmt(out)+' قرص  |  الشريط: '+fmt(sp)+' قرص';
 }
 function applyLang(l){
   LANG=l;
