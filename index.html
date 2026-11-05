@@ -272,7 +272,7 @@ function calc(){
   if(rest>0)t+=tile(rest,'strip');
   var en=(LANG==='en');
   var sub=(boxes>0)?'<div class="sub">('+stripW(strips)+')</div>':'';
-  var h=strips/2,whole=Math.floor(h),frac=(h-whole)>0.001;
+  var h=Math.ceil(strips/2),whole=h,frac=false;
   var hb=Math.floor(whole/y),hr=whole-hb*y,p=[];
   if(hb>0)p.push(boxW(hb));
   if(hr>0)p.push(stripW(hr));
