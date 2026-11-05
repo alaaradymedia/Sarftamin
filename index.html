@@ -41,8 +41,8 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;background:var
 .hd h1{font-size:18px;font-weight:700;margin:0;line-height:1.4}
 .hd p{margin:1px 0 0;font-size:13px;color:var(--mint);opacity:.95}
 .tools{display:flex;gap:8px;flex:none}
-.tb{width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;display:grid;place-items:center;padding:0}
-.tb:hover{background:rgba(255,255,255,.25)}
+.tb{width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.22);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.45);color:#fff;font:inherit;font-size:13px;font-weight:700;cursor:pointer;display:grid;place-items:center;padding:0}
+.tb:hover{background:rgba(255,255,255,.34)}
 .tb:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .tb svg{display:block}
 .logo-btn{border:none;background:none;padding:0;display:block;flex:none;border-radius:14px;cursor:pointer}
@@ -160,13 +160,7 @@ input:focus{outline:none;border-color:var(--jd);box-shadow:0 0 0 4px var(--ring)
 <body>
 <header class="hd">
 <div class="hd-art" aria-hidden="true">
-<svg class="hd-deco" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
-<g opacity=".13"><g transform="rotate(-32 130 100)"><rect x="80" y="82" width="100" height="38" rx="19"/><path d="M130 82v38"/></g>
-<g transform="rotate(24 470 150)"><rect x="430" y="136" width="80" height="30" rx="15"/><path d="M470 136v30"/></g>
-<circle cx="880" cy="60" r="34"/><circle cx="880" cy="60" r="18"/></g>
-<g fill="#fff" stroke="none" opacity=".12"><circle cx="300" cy="50" r="6"/><circle cx="324" cy="50" r="6"/><circle cx="348" cy="50" r="6"/><circle cx="372" cy="50" r="6"/><circle cx="300" cy="74" r="6"/><circle cx="324" cy="74" r="6"/><circle cx="348" cy="74" r="6"/><circle cx="372" cy="74" r="6"/>
-<circle cx="700" cy="120" r="5"/><circle cx="720" cy="120" r="5"/><circle cx="740" cy="120" r="5"/><circle cx="960" cy="150" r="4"/><circle cx="60" cy="40" r="4"/></g>
-</svg>
+<svg class="hd-deco" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g fill="#fff" opacity=".09"><circle cx="470" cy="46" r="5"/><circle cx="492" cy="46" r="5"/><circle cx="514" cy="46" r="5"/><circle cx="536" cy="46" r="5"/><circle cx="470" cy="68" r="5"/><circle cx="492" cy="68" r="5"/><circle cx="514" cy="68" r="5"/><circle cx="536" cy="68" r="5"/></g></svg>
 <svg class="hd-wave" viewBox="0 0 1440 120" preserveAspectRatio="none"><path class="w1" d="M0 52C200 8 380 8 560 50S920 92 1100 50 1360 14 1440 40V120H0Z"/><path class="w2" d="M0 74C180 112 360 112 540 74S900 34 1080 74 1350 104 1440 82V120H0Z"/></svg>
 </div>
 <div class="hd-in">
@@ -182,11 +176,11 @@ input:focus{outline:none;border-color:var(--jd);box-shadow:0 0 0 4px var(--ring)
 <button class="tb" id="info" type="button" aria-label="Shortcuts / الاختصارات" aria-expanded="false"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 7.5v5.5"/><circle cx="12" cy="16.6" r=".6" fill="currentColor"/></svg></button>
 <div class="pop" id="pop"><div class="pc">
 <p class="pt" data-t="kbTitle"></p>
-<div class="kr"><div class="kk"><button class="key" type="button" data-act="next">Tab</button></div><span class="kd" data-t="k_next"></span></div>
-<div class="kr"><div class="kk"><button class="key" type="button" data-act="prev">Shift</button><span class="pl">+</span><button class="key" type="button" data-act="prev">Tab</button></div><span class="kd" data-t="k_prev"></span></div>
+<div class="kr"><div class="kk"><button class="key" type="button" data-act="next">+</button></div><span class="kd" data-t="k_next"></span></div>
+<div class="kr"><div class="kk"><button class="key" type="button" data-act="prev">&minus;</button></div><span class="kd" data-t="k_prev"></span></div>
 <div class="kr"><div class="kk"><button class="key" type="button" data-act="enter">Enter</button></div><span class="kd" data-t="k_enter"></span></div>
 <div class="kr"><div class="kk"><button class="key" type="button" data-act="esc">Esc</button></div><span class="kd" data-t="k_esc"></span></div>
-<div class="kr"><div class="kk"><button class="key" type="button" data-act="clear">&minus;</button></div><span class="kd" data-t="k_clear"></span></div>
+<div class="kr"><div class="kk"><button class="key" type="button" data-act="clear">End</button></div><span class="kd" data-t="k_clear"></span></div>
 </div></div>
 </div>
 </div>
@@ -222,8 +216,8 @@ input:focus{outline:none;border-color:var(--jd);box-shadow:0 0 0 4px var(--ring)
 var ids=['a','b','c','x','y'];
 var LANG='ar';
 var T={
- ar:{title:'حاسبة صرف علاج التأمين الصحي',sub:'(علاء راضي)',dose:'الجرعة',box:'العلبة',pills:'قرص',times:'مرة يوميًا',days:'يوم',boxPills:'أقراص العلبة',boxStrips:'شرايط العلبة',clear:'مسح الكل',kbTitle:'اختصارات لوحة المفاتيح',k_next:'الخانة اللي بعدها',k_prev:'الرجوع للخانة السابقة',k_enter:'إظهار النتيجة',k_esc:'إغلاق النتيجة',k_clear:'مسح الكل',ft:'تصميم وتنفيذ : (علاء راضي - Alaa Rady)'},
- en:{title:'Health Insurance Medication Dispensing Calculator',sub:'(Alaa Rady)',dose:'Dose',box:'Box',pills:'Tablets',times:'Times a day',days:'Days',boxPills:'Tablets per box',boxStrips:'Strips per box',clear:'Clear all',kbTitle:'Keyboard shortcuts',k_next:'Next field',k_prev:'Previous field',k_enter:'Show result',k_esc:'Close result',k_clear:'Clear all',ft:'Design & development: Alaa Rady'}
+ ar:{title:'حاسبة صرف علاج التأمين الصحي',sub:'علاء راضي',dose:'الجرعة',box:'العلبة',pills:'قرص',times:'مرة يوميًا',days:'يوم',boxPills:'أقراص العلبة',boxStrips:'شرايط العلبة',clear:'مسح الكل',kbTitle:'اختصارات لوحة المفاتيح',k_next:'الخانة اللي بعدها',k_prev:'الرجوع للخانة السابقة',k_enter:'إظهار النتيجة',k_esc:'إغلاق النتيجة',k_clear:'مسح الكل',ft:'تصميم وتنفيذ : علاء راضي - Alaa Rady'},
+ en:{title:'Health Insurance Medication Dispensing Calculator',sub:'Alaa Rady',dose:'Dose',box:'Box',pills:'Tablets',times:'Times a day',days:'Days',boxPills:'Tablets per box',boxStrips:'Strips per box',clear:'Clear all',kbTitle:'Keyboard shortcuts',k_next:'Next field',k_prev:'Previous field',k_enter:'Show result',k_esc:'Close result',k_clear:'Clear all',ft:'Design & development: Alaa Rady'}
 };
 var EXP='<svg class="ex" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>';
 var EMPTY='<svg class="em" viewBox="0 0 32 32" width="64" height="64" aria-hidden="true"><g transform="rotate(-40 16 16)"><rect x="2" y="10" width="28" height="12" rx="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M16 10v12" stroke="currentColor" stroke-width="1.6"/></g></svg>';
@@ -336,7 +330,10 @@ $('th').addEventListener('click',function(){applyTheme(document.documentElement.
 window.addEventListener('hashchange',function(){if(location.hash!=='#r')$('ov').className='ov'});
 document.addEventListener('keydown',function(e){
   if(e.ctrlKey||e.metaKey||e.altKey)return;
-  if(e.key==='-'||e.key==='Subtract'||e.key==='\u2212'){e.preventDefault();setPop(false);clearAll();return}
+  var ovOn=$('ov').className.indexOf('on')>=0;
+  if(e.key==='End'){e.preventDefault();setPop(false);clearAll();return}
+  if(!ovOn&&(e.key==='+'||e.key==='='||e.key==='Add')){e.preventDefault();setPop(false);moveFocus(1);return}
+  if(!ovOn&&(e.key==='-'||e.key==='Subtract'||e.key==='\u2212')){e.preventDefault();setPop(false);moveFocus(-1);return}
   if(e.key==='Escape'&&popOpen()){setPop(false);return}
   if($('ov').className.indexOf('on')>=0&&(e.key==='Escape'||e.key==='Enter'||e.key===' ')){e.preventDefault();closeOv()}
 });
